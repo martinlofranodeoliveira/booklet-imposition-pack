@@ -1,0 +1,23 @@
+name: offline-runtime-checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  php-pdf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Prepare qualified runtime and exact Composer dependencies
+        timeout-minutes: 10
+        run: docker build --tag booklet-imposition-test .
+      - name: Test without networking
+        timeout-minutes: 8
+        run: docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges --pids-limit 256 --memory 1g --cpus 2 --tmpfs /tmp:rw,nosuid,nodev,size=512m booklet-imposition-test php tests/run.php
+      - name: Deterministic headless demo without networking
+        timeout-minutes: 2
+        run: docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges --pids-limit 256 --memory 1g --cpus 2 --tmpfs /tmp:rw,nosuid,nodev,size=512m booklet-imposition-test php bin/booklet.php demo --assert --json --output /tmp/booklet-ci-demo

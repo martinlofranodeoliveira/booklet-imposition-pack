@@ -1,0 +1,46 @@
+{
+  "name": "lofrano/booklet-imposition-pack",
+  "description": "Bounded, inspectable booklet imposition for selected static PDF pages",
+  "version": "0.1.0",
+  "type": "library",
+  "license": "MIT",
+  "homepage": "https://lofranotecnologia.com.br",
+  "authors": [
+    {
+      "name": "Lofrano Tecnologia"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/martinlofranodeoliveira/booklet-imposition-pack",
+    "issues": "https://github.com/martinlofranodeoliveira/booklet-imposition-pack/issues"
+  },
+  "require": {
+    "php": ">=8.4 <8.5",
+    "ext-gd": "*",
+    "setasign/fpdi": "2.6.9",
+    "setasign/fpdf": "1.9.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lofrano\\Booklet\\": "src/"
+    }
+  },
+  "bin": [
+    "bin/booklet.php"
+  ],
+  "config": {
+    "allow-plugins": false,
+    "sort-packages": true
+  },
+  "archive": {
+    "exclude": [
+      "/build",
+      "/vendor",
+      "/.git",
+      "/.env",
+      "/.env.*",
+      "/.cache",
+      "/coverage"
+    ]
+  }
+}
